@@ -1,4 +1,4 @@
-package com.xwy.sourcecode.map;
+package com.xwy.sourcecode.classlayout;
 
 import org.openjdk.jol.info.ClassLayout;
 
@@ -7,15 +7,13 @@ import org.openjdk.jol.info.ClassLayout;
  * email: xuweiyu@igengmei.com
  * 简介：
  */
-public class ObjectLayout4 {
+public class ObjectLayout2 {
     public static void main(String[] args) {
-        Empty empty = new Empty();
-        ClassLayout classLayout = ClassLayout.parseInstance(empty);
+        ClassLayout classLayout = ClassLayout.parseClass(C.class);
         System.out.println(classLayout.toPrintable());
     }
-
-
 }
-class Empty{
-
+class C{
+    int i;
+    long j;
 }

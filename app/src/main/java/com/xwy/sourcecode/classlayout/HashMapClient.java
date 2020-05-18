@@ -1,4 +1,4 @@
-package com.xwy.sourcecode.map;
+package com.xwy.sourcecode.classlayout;
 
 import java.util.HashMap;
 import java.util.Map;

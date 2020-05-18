@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.xwy.sourcecode.map.HashMapClient;
+import com.xwy.sourcecode.classlayout.HashMapClient;
 
 public class MainActivity extends AppCompatActivity {
 
