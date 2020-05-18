@@ -9,8 +9,13 @@ import org.openjdk.jol.info.ClassLayout;
  */
 public class ObjectLayout4 {
     public static void main(String[] args) {
-        A[] list = new A[10];
-        ClassLayout classLayout = ClassLayout.parseInstance(list);
+        Empty empty = new Empty();
+        ClassLayout classLayout = ClassLayout.parseInstance(empty);
         System.out.println(classLayout.toPrintable());
     }
+
+
+}
+class Empty{
+
 }
