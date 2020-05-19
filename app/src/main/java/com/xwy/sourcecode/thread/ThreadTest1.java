@@ -1,0 +1,31 @@
+package com.xwy.sourcecode.thread;
+
+/**
+ * Created by xuweiyu on 2020/5/19.
+ * email: xuweiyu@igengmei.com
+ * 简介：wait方法
+ */
+public class ThreadTest1 {
+    public static void main(String[] args) {
+        final ThreadTest1 threadTest = new ThreadTest1();
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                threadTest.testWait();
+            }
+        }.start();
+    }
+
+    private void testWait() {
+        synchronized (ThreadTest1.class){
+            System.out.println("testWait start time = " + System.currentTimeMillis());
+            try {
+                ThreadTest1.class.wait(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("testWait end   time = " + System.currentTimeMillis());
+        }
+    }
+}
