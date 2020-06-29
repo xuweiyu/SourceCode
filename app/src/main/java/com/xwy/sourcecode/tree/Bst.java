@@ -8,6 +8,7 @@ package com.xwy.sourcecode.tree;
 public class Bst {
     public static void main(String[] args) {
         TreeNode treeNode = TreeUtils.getBinarySortTree();
+        TreeNode1 treeNode1 = TreeUtils.getTree1();
 //        System.out.println(findValue(47,treeNode));
 //        System.out.println(findValue(0,treeNode));
 //        System.out.intln(findValue(93, treeNode));
