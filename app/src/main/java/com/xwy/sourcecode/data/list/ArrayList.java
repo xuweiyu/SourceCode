@@ -30,6 +30,10 @@ public class ArrayList<E> {
             elements[i] = null;
         }
         size = 0;
+        if (elements != null && elements.length > DEFAULT_CAPACITY) {
+            //缩容
+            elements = (E[]) new Object[DEFAULT_CAPACITY];
+        }
     }
 
     public int size() {

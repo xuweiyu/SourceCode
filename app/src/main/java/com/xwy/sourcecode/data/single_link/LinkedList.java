@@ -1,22 +1,18 @@
-package com.xwy.sourcecode.data.link;
+package com.xwy.sourcecode.data.single_link;
 
 import androidx.annotation.NonNull;
 
 import com.xwy.sourcecode.data.AbstractList;
 
-
 /**
- * Created by xuweiyu on 2020/6/30.
+ * Created by xuweiyu on 2020/6/29.
  * email: xuweiyu@igengmei.com
  * 简介：
  */
-public class LinkedList2<E> extends AbstractList<E> {
+public class LinkedList<E> extends AbstractList<E> {
     public static final int ELEMENT_NOT_FOUND = -1;
     private Node<E> first;
 
-    public LinkedList2() {
-        first = new Node<>(null, null);
-    }
 
     @Override
     public void clear() {
@@ -48,9 +44,13 @@ public class LinkedList2<E> extends AbstractList<E> {
     public E remove(int index) {
         rangeCheck(index);
         Node<E> node = first;
-        Node<E> prev = index == 0 ? first : node(index - 1);
-        node = prev.next;
-        prev.next = node.next;
+        if (index == 0) {
+            first = first.next;
+        } else {
+            Node<E> prev = node(index - 1);
+            node = prev.next;
+            prev.next = node.next;
+        }
         size--;
         return node.element;
     }
@@ -80,8 +80,12 @@ public class LinkedList2<E> extends AbstractList<E> {
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-        Node<E> prev = index == 0 ? first : node(index - 1);
-        prev.next = new Node<>(element, prev.next);
+        if (index == 0) {
+            first = new Node<>(element, first);
+        } else {
+            Node<E> prev = node(index - 1);
+            prev.next = new Node<>(element, prev.next);
+        }
         size++;
     }
 

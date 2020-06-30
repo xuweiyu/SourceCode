@@ -1,6 +1,4 @@
-package com.xwy.sourcecode.data.link;
-
-import org.w3c.dom.Node;
+package com.xwy.sourcecode.data.single_link;
 
 import java.util.HashSet;
 import java.util.Set;

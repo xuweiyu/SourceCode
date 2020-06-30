@@ -1,4 +1,4 @@
-package com.xwy.sourcecode.data.link;
+package com.xwy.sourcecode.data.single_link;
 
 import androidx.annotation.NonNull;
 
@@ -10,16 +10,17 @@ import com.xwy.sourcecode.data.AbstractList;
  * email: xuweiyu@igengmei.com
  * 简介：
  */
-public class LinkedList<E> extends AbstractList<E> {
+public class LinkedList2<E> extends AbstractList<E> {
     public static final int ELEMENT_NOT_FOUND = -1;
     private Node<E> first;
-    private Node<E> last;
 
+    public LinkedList2() {
+        first = new Node<>(null, null);
+    }
 
     @Override
     public void clear() {
         first = null;
-        last = null;
         size = 0;
     }
 
@@ -46,19 +47,10 @@ public class LinkedList<E> extends AbstractList<E> {
     @Override
     public E remove(int index) {
         rangeCheck(index);
-        Node<E> node = node(index);
-        Node prev = node.prev;
-        Node next = node.next;
-        if (prev != null) {
-            prev.next = next;
-        } else {//等价于删除第一个元素
-            first = next;
-        }
-        if (next != null) {
-            next.prev = prev;
-        } else {//等价于删除最后一个元素
-            last = prev;
-        }
+        Node<E> node = first;
+        Node<E> prev = index == 0 ? first : node(index - 1);
+        node = prev.next;
+        prev.next = node.next;
         size--;
         return node.element;
     }
@@ -88,27 +80,8 @@ public class LinkedList<E> extends AbstractList<E> {
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-        //处理插在末尾的情况
-        if (index == size) {
-            Node oldLast = last;
-            last = new Node<>(element, null, oldLast);
-            if (oldLast == null) {//处理插入第1个元素的情况
-                first = last;
-            } else {
-                oldLast.setNext(last);
-            }
-        } else {
-            Node<E> next = node(index);
-            Node<E> prev = next.prev;
-            Node<E> newNode = new Node<>(element, next, prev);
-            next.setPrev(newNode);
-            //处理插在最前面的情况
-            if (prev != null) {
-                prev.setNext(newNode);
-            } else {
-                first = newNode;
-            }
-        }
+        Node<E> prev = index == 0 ? first : node(index - 1);
+        prev.next = new Node<>(element, prev.next);
         size++;
     }
 
@@ -127,19 +100,11 @@ public class LinkedList<E> extends AbstractList<E> {
 
     private Node<E> node(int index) {
         rangeCheck(index);
-        if (index < (size >> 1)) {//向后查找
-            Node<E> node = first;
-            for (int i = 0; i < index; i++) {
-                node = node.next;
-            }
-            return node;
-        } else {//向前查找
-            Node<E> node = last;
-            for (int i = size - 1; i > index; i--) {
-                node = node.prev;
-            }
-            return node;
+        Node<E> node = first;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
         }
+        return node;
     }
 
     @NonNull
@@ -149,34 +114,23 @@ public class LinkedList<E> extends AbstractList<E> {
         stringBuilder.append("size = ").append(size).append(",[");
         Node node = first;
         for (int i = 0; i < size; i++) {
-            if (i != 0) {
-                stringBuilder.append("<->");
-            }
             stringBuilder.append(node.element);
-            if (i == size - 1) {
+            if (i != size - 1) {
+                stringBuilder.append(",");
+                node = node.next;
+            } else {
                 stringBuilder.append("]");
             }
-            node = node.next;
         }
         return stringBuilder.toString();
     }
 
-    public static class Node<E> {
+    private static class Node<E> {
         E element;
         Node next;
-        Node prev;
 
-        public Node(E element, Node next, Node prev) {
+        public Node(E element, Node next) {
             this.element = element;
-            this.next = next;
-            this.prev = prev;
-        }
-
-        public void setPrev(Node prev) {
-            this.prev = prev;
-        }
-
-        public void setNext(Node next) {
             this.next = next;
         }
     }
