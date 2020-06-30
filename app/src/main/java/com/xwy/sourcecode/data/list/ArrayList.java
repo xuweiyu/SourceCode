@@ -111,7 +111,7 @@ public class ArrayList<E> {
                 newElements[i] = elements[i];
             }
             elements = newElements;
-            System.out.println(oldCapacity + ":" + newCapacity);
+//            System.out.println(oldCapacity + ":" + newCapacity);
         }
     }
 
@@ -142,19 +142,32 @@ public class ArrayList<E> {
      * @return
      */
     public E remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("index:" + index + ",size:" + size);
-        }
+        rangeCheck(index);
         E old = elements[index];
         for (int i = index; i < size; i++) {
             elements[i] = elements[i + 1];
         }
         elements[--size] = null;
+        trim();
         return old;
     }
 
-    public boolean remove(E element){
-        if (indexOf(element)>=0){
+    //缩容
+    private void trim() {
+        int capacity = elements.length;
+        //容量大于最低容量，而且容量有一半浪费，而且容量除以2后还大于最低容量的时候扩容
+        if (capacity > DEFAULT_CAPACITY && (capacity >> 1) > size && (capacity >> 1) >= DEFAULT_CAPACITY) {
+            int newCapacity = capacity >> 1;
+            E[] newElements = (E[]) new Object[newCapacity];
+            for (int i = 0; i < size; i++) {
+                newElements[i] = elements[i];
+            }
+            elements = newElements;
+        }
+    }
+
+    public boolean remove(E element) {
+        if (indexOf(element) >= 0) {
             remove(indexOf(element));
             return true;
         }

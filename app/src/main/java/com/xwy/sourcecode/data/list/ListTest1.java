@@ -1,8 +1,6 @@
 package com.xwy.sourcecode.data.list;
 
-import com.xwy.sourcecode.data.Person;
 
-import java.util.ArrayList;
 
 /**
  * Created by xuweiyu on 2020/6/29.
@@ -11,7 +9,14 @@ import java.util.ArrayList;
  */
 public class ListTest1 {
     public static void main(String[] args) {
-        ArrayList<Person> peoples = new ArrayList<>();
-
+        ArrayList<Integer> peoples = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            peoples.add(i);
+        }
+//        System.out.println(peoples);
+        for (int i = 0; i < 49; i++) {
+            peoples.remove(0);
+        }
+        System.out.println(peoples);
      }
 }
