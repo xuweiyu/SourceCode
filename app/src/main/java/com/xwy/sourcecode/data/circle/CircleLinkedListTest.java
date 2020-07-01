@@ -8,14 +8,20 @@ package com.xwy.sourcecode.data.circle;
 public class CircleLinkedListTest {
     public static void main(String[] args) {
         CircleLinkedList<Integer> linkedList = new CircleLinkedList<>();
-        linkedList.add(11);
-        linkedList.add(22);
-        linkedList.add(33);
-        linkedList.add(44);
-        linkedList.add(0, 55);
-        linkedList.add(0, 66);
-        linkedList.remove(linkedList.size()-1);
-        linkedList.remove(0);
-        System.out.println(linkedList);
+        for (int i = 1; i <= 8; i++) {
+            linkedList.add(i);
+        }
+        yueSeFu(linkedList);
+    }
+
+    private static void yueSeFu(CircleLinkedList<Integer> linkedList) {
+        linkedList.reset();//将current指定到first
+        while (!linkedList.isEmpty()) {
+            //数三次,相当于向后移动个单元
+            linkedList.next();
+            linkedList.next();
+            //删除
+            linkedList.remove();
+        }
     }
 }

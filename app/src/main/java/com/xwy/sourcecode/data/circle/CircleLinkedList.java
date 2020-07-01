@@ -13,6 +13,7 @@ public class CircleLinkedList<E> extends AbstractList<E> {
     public static final int ELEMENT_NOT_FOUND = -1;
     private Node<E> first;
     private Node<E> last;
+    private Node<E> current;
 
     @Override
     public void clear() {
@@ -41,26 +42,61 @@ public class CircleLinkedList<E> extends AbstractList<E> {
         return null;
     }
 
-    @Override
-    public E remove(int index) {
-        rangeCheck(index);
-        Node<E> node = first;
+    public void reset() {
+        current = first;
+    }
+
+    public E next() {
+        if (current == null) {
+            return null;
+        } else {
+            current = current.next;
+            //双向循环链表这里不会为空
+            return current.element;
+        }
+    }
+
+    public E remove() {
+        if (current == null) {
+            return null;
+        } else {
+            Node next = current.next;
+            E element = remove(current);
+            //删完链表空了，也就是之前只剩一个元素
+            if (size == 0) {
+                current = null;
+            } else {
+                current = next;
+            }
+            System.out.println(element);
+            return element;
+        }
+    }
+
+    public E remove(Node<E> node) {
         if (size == 1) {
             first = null;
             last = null;
         } else {
-            node = node(index);
             Node prev = node.prev;
             Node next = node.next;
-            if (index == 0) {
+            prev.next = next;
+            next.prev = prev;
+            if (node == first) {
                 first = next;
             }
-            if (index == size - 1) {
+            if (node == last) {
                 last = prev;
             }
         }
         size--;
         return node.element;
+    }
+
+    @Override
+    public E remove(int index) {
+        rangeCheck(index);
+        return remove(node(index));
     }
 
     @Override
